@@ -24,10 +24,12 @@ class MainViewModel : ViewModel() {
                 movieList.movie.filter { movie -> movie.poster != null }
             }
             .subscribe({ filteredMovieList ->
-                _movies.postValue(filteredMovieList)
+                val loadedMovies=_movies.value.orEmpty().toMutableList()
+                loadedMovies.addAll(filteredMovieList)
+                _movies.postValue(loadedMovies)
+                Log.d("TAG", "Loaded: $pageQuery")
                 pageQuery++
                 Log.d("MainActivity", "$filteredMovieList")
-                Log.d("MainActivity", "${pageQuery}")
 
             }, { e ->
                 e.printStackTrace()
