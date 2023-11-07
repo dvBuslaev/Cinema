@@ -2,12 +2,12 @@ package com.example.cinema.data.NetworkEntitys
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieList (
+data class MovieList(
 
-    @SerializedName("docs"  ) var movie  : ArrayList<Movie> = arrayListOf(),
-   /* @SerializedName("total" ) var total : Int?            = null,
-    @SerializedName("limit" ) var limit : Int?            = null,
-    @SerializedName("page"  ) var page  : Int?            = null,
-    @SerializedName("pages" ) var pages : Int?            = null*/
+    @SerializedName("docs") var movie: ArrayList<Movie> = arrayListOf(),
+    @SerializedName("total") var total: Int? = null,
+    @SerializedName("limit") var limit: Int? = null,
+    @SerializedName("page") var page: Int? = null,
+    @SerializedName("pages") var pages: Int? = null
 
 )

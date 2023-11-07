@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainViewModel : ViewModel() {
-     var pageQuery = 1
+    var pageQuery = 1
     private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>>
         get() = _movies
@@ -20,13 +20,14 @@ class MainViewModel : ViewModel() {
     fun loadMovies() {
         val disposable = ApiFactory.apiService.getMovieList(pageQuery).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-
-                    movieList ->
-                _movies.postValue(movieList.movie)
+            .map { movieList ->
+                movieList.movie.filter { movie -> movie.poster != null }
+            }
+            .subscribe({ filteredMovieList ->
+                _movies.postValue(filteredMovieList)
                 pageQuery++
-                Log.d("MainActivity","${movieList.movie}")
-                Log.d("MainActivity","${pageQuery}")
+                Log.d("MainActivity", "$filteredMovieList")
+                Log.d("MainActivity", "${pageQuery}")
 
             }, { e ->
                 e.printStackTrace()
@@ -36,6 +37,7 @@ class MainViewModel : ViewModel() {
 
 
     }
+
 
     override fun onCleared() {
         super.onCleared()

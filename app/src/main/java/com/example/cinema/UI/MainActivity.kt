@@ -1,28 +1,32 @@
 package com.example.cinema.UI
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cinema.R
 import com.example.cinema.UI.Model.MainViewModel
-import com.example.cinema.data.ApiService.ApiFactory
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.example.cinema.UI.RVAdapter.MoviesAdapter
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val viewmodel= ViewModelProvider(this).get(MainViewModel::class.java)
-        viewmodel.loadMovies()
-        /*ApiFactory.apiService.getMovieList(*//*viewmodel.pageQuery*//*).subscribeOn(Schedulers.io()).observeOn(
-            AndroidSchedulers.mainThread())
-          .subscribe({it-> Log.d("MainActivity","${it}")
+        val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        val rvMovieItem: RecyclerView = findViewById(R.id.recycleViewMovieItem)
+        rvMovieItem.layoutManager = GridLayoutManager(applicationContext, 2);
+        val moviesAdapter = MoviesAdapter()
+        rvMovieItem.adapter = moviesAdapter
 
 
-          },{
-              throw Exception("$it - exeption")
-          })*/
+        viewModel.movies.observe(this) {  movieList ->
+            moviesAdapter.moviesList.clear()
+            moviesAdapter.moviesList.addAll(movieList)
+            moviesAdapter.notifyDataSetChanged()
+
+        }
+        viewModel.loadMovies()
+
     }
 }
