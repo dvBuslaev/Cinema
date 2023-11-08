@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.movies.observe(this) {  movieList ->
 
-            moviesAdapter.moviesList.clear()
+
             moviesAdapter.moviesList.addAll(movieList)
             moviesAdapter.notifyDataSetChanged()
 
