@@ -9,7 +9,7 @@ import com.example.cinema.R
 import com.example.cinema.data.NetworkEntitys.Movie
 
 class MoviesAdapter : ListAdapter<Movie, MoviesViewHolder>(MovieDiffCallback()) {
-    val moviesList = mutableListOf<Movie>()
+
     var onReachEndScrollListener: OnReachEndScrollListener? = null
     var i = 0
 
@@ -24,11 +24,11 @@ class MoviesAdapter : ListAdapter<Movie, MoviesViewHolder>(MovieDiffCallback()) 
     }
 
 
-    override fun getItemCount() = moviesList.size
+
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        Log.d("onBindViewHolder", "called onBindViewHolder")
-        val movie = moviesList[position]
+        Log.d("onBindViewHolder", "called onBindViewHolder $position")
+        val movie = getItem(position)
         val backgroundID = when (movie.rating?.kp ?: 0.0) {
             in 8.0..10.0 -> R.drawable.rating_green
             in 6.0..7.99 -> R.drawable.rating_yellow
@@ -39,7 +39,7 @@ class MoviesAdapter : ListAdapter<Movie, MoviesViewHolder>(MovieDiffCallback()) 
         val formatedRating = "%.1f".format(movie.rating?.kp)
         holder.tvRating.text = formatedRating
         holder.tvRating.setBackgroundResource(backgroundID)
-        if (position == moviesList.size - 1) {
+        if (position >= currentList.size - 10) {
             onReachEndScrollListener?.loadMoreItems()
         }
     }

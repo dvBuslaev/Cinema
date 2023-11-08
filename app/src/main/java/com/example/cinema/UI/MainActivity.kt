@@ -1,6 +1,7 @@
 package com.example.cinema.UI
 
 import android.os.Bundle
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,31 +13,44 @@ import com.example.cinema.UI.RVAdapter.MoviesAdapter
 class MainActivity : AppCompatActivity() {
 
     private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var rvMovieItem: RecyclerView
+    private lateinit var viewModel: MainViewModel
+    private lateinit var progressBar:ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        val rvMovieItem: RecyclerView = findViewById(R.id.recycleViewMovieItem)
-        rvMovieItem.layoutManager = GridLayoutManager(applicationContext, 2);
-        moviesAdapter = MoviesAdapter()
-        rvMovieItem.adapter = moviesAdapter
+        initViews()
+        viewModel.movies.observe(this) {
+            moviesAdapter.submitList(it)
 
+        }
+        viewModel.isLoading.observe(this){
+            if(it){
+                progressBar.visibility=ProgressBar.VISIBLE
 
-        viewModel.movies.observe(this) {  movieList ->
+            }else{
 
-
-            moviesAdapter.moviesList.addAll(movieList)
-            moviesAdapter.notifyDataSetChanged()
+                progressBar.visibility= ProgressBar.INVISIBLE
 
             }
+        }
+        if (savedInstanceState == null) {
+            viewModel.loadMovies()
+        }
 
-
-
-        viewModel.loadMovies()
         moviesAdapter.onReachEndScrollListener = object : MoviesAdapter.OnReachEndScrollListener {
             override fun loadMoreItems() {
                 viewModel.loadMovies()
             }
         }
+    }
+
+    fun initViews() {
+        progressBar=findViewById(R.id.progressBarLoading)
+        rvMovieItem = findViewById(R.id.recycleViewMovieItem)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        moviesAdapter = MoviesAdapter()
+        rvMovieItem.adapter = moviesAdapter
+        rvMovieItem.layoutManager = GridLayoutManager(applicationContext, 2)
     }
 }
