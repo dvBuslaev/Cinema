@@ -1,8 +1,11 @@
 package com.example.cinema.UI.Activitys
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViews()
+        launchFragment()
         viewModel.movies.observe(this) {
             moviesAdapter.submitList(it)
 
@@ -44,13 +48,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    fun newIntentAddItem(context: Context): Intent {
+        val intent = Intent(context, ShopItemActivity::class.java)
+        intent.putExtra(EXTRA_SCREEN_MODE, MODE_ADD)
+        return intent
+    }
 
-    fun initViews() {
+    private fun initViews() {
         progressBar=findViewById(R.id.progressBarLoading)
         rvMovieItem = findViewById(R.id.recycleViewMovieItem)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         moviesAdapter = MoviesAdapter()
         rvMovieItem.adapter = moviesAdapter
         rvMovieItem.layoutManager = GridLayoutManager(applicationContext, 2)
+    }
+    private fun launchFragment(fragment: Fragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.shop_item_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
