@@ -1,30 +1,20 @@
 package com.example.cinema.UI.Activitys
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.cinema.R
+import com.example.cinema.UI.Fragments.MovieDescripFragment
 import com.example.cinema.UI.Fragments.MovieListFragment
-import com.example.cinema.UI.Model.MainViewModel
-import com.example.cinema.UI.RVAdapter.MoviesAdapter
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var moviesAdapter: MoviesAdapter
-    private lateinit var rvMovieItem: RecyclerView
-    private lateinit var viewModel: MainViewModel
-    private lateinit var progressBar:ProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         launchFragment(MovieListFragment.newInstance())
-
+        //launchFragment2(MovieDescripFragment.newInstance("movie name","once apon the time","2007","https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/4fe19ade-348a-404f-b35f-32616017ce91/x1000"))
     }
 
 
@@ -32,7 +22,14 @@ class MainActivity : AppCompatActivity() {
     private fun launchFragment(fragment: Fragment) {
         supportFragmentManager.popBackStack()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.shop_item_container, fragment)
+            .replace(R.id.fragmentMovieList, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+    private fun launchFragment2(fragment: Fragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentMovieDescr, fragment)
             .addToBackStack(null)
             .commit()
     }

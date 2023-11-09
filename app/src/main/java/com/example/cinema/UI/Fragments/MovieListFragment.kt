@@ -1,9 +1,11 @@
 package com.example.cinema.UI.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -23,53 +25,30 @@ import com.example.cinema.UI.RVAdapter.MoviesAdapter
  * create an instance of this fragment.
  */
 class MovieListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var movieName: String? = null
-    private var movieDescription: String? = null
-    private var movieYear: String? = null
-    private var moviePoster: String? = null
+
     private lateinit var moviesAdapter: MoviesAdapter
     private lateinit var rvMovieItem: RecyclerView
     private lateinit var viewModel: MainViewModel
     private lateinit var progressBar: ProgressBar
+    private lateinit var poster:ImageView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        /*parseParams()*/
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
 
     companion object {
-        private const val SCREEN_MODE = "extra_mode"
-        private const val MOVIE_ID = "MOVIE_ID"
-        private const val MOVIE_DESCRIPTION = "MOVIE_DESCRIPTION"
-        private const val MOVIE_NAME = "MOVIE_NAME"
-        private const val MODE_UNKNOWN = ""
-        private const val MOVIE_YEAR = "MOVIE_YEAR"
-        private const val MOVIE_POSTER = "MOVIE_POSTER"
 
-
-        /*@JvmStatic*/
         fun newInstance(
-            /*movieName: String,
-            movieDescription: String,
-            movieYear: String,
-            moviePoster: String*/
+
         ): MovieListFragment {
             return MovieListFragment().apply {
                 arguments = Bundle().apply {
-                   /* putString(MOVIE_DESCRIPTION, movieDescription)
-                    putString(MOVIE_POSTER, moviePoster)
-                    putString(MOVIE_NAME, movieName)
-                    putString(MOVIE_YEAR, movieYear)*/
+
                 }
             }
         }
@@ -78,19 +57,21 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews(view)
+        setupClickListener()
+
 
 
         viewModel.movies.observe(viewLifecycleOwner) {
             moviesAdapter.submitList(it)
 
         }
-        viewModel.isLoading.observe(viewLifecycleOwner){
-            if(it){
-                progressBar.visibility=ProgressBar.VISIBLE
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                progressBar.visibility = ProgressBar.VISIBLE
 
-            }else{
+            } else {
 
-                progressBar.visibility= ProgressBar.INVISIBLE
+                progressBar.visibility = ProgressBar.INVISIBLE
 
             }
         }
@@ -103,23 +84,36 @@ class MovieListFragment : Fragment() {
                 viewModel.loadMovies()
             }
         }
+
+
     }
+
     private fun initViews(view: View) {
-        progressBar=view.findViewById(R.id.progressBarLoading)
+
+        progressBar = view.findViewById(R.id.progressBarLoading)
         rvMovieItem = view.findViewById(R.id.recycleViewMovieItem)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         moviesAdapter = MoviesAdapter()
         rvMovieItem.adapter = moviesAdapter
         rvMovieItem.layoutManager = GridLayoutManager(activity, 2)
     }
+    fun setupClickListener(){
+        moviesAdapter.onMovieClickListener={
+            Log.d("setupClickListener","clicked")
+            val fragment = MovieDescripFragment.newInstance("movie name","once apon the time","2007","https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/4fe19ade-348a-404f-b35f-32616017ce91/x1000")
+            lounchSecondFragment(fragment)
 
-    /*private fun parseParams() {
-        val args = requireArguments()
-        if (!args.containsKey(MOVIE_DESCRIPTION) && !args.containsKey(MOVIE_NAME) && !args.containsKey(
-                MOVIE_YEAR
-            ) && !args.containsKey(MOVIE_POSTER)
-        ) {
-            throw RuntimeException("Missing required params")
+
+
+
         }
-    }*/
+    }
+    fun lounchSecondFragment(transaction:Fragment) {
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.fragmentMovieDescr, transaction)
+            ?.addToBackStack(null) // Добавьте эту строку, если вы хотите добавить транзакцию в стек возврата назад
+            ?.commit()
+    }
+
+
 }

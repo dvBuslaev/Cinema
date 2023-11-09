@@ -11,7 +11,7 @@ import com.example.cinema.data.NetworkEntitys.Movie
 class MoviesAdapter : ListAdapter<Movie, MoviesViewHolder>(MovieDiffCallback()) {
 
     var onReachEndScrollListener: OnReachEndScrollListener? = null
-    var onShopItemClickListener: ((Movie) -> Unit)? = null
+    var onMovieClickListener: ((Movie) -> Unit)? = null
     var i = 0
 
 
@@ -23,6 +23,7 @@ class MoviesAdapter : ListAdapter<Movie, MoviesViewHolder>(MovieDiffCallback()) 
         )
         return MoviesViewHolder(view)
     }
+
 
 
 
@@ -43,8 +44,9 @@ class MoviesAdapter : ListAdapter<Movie, MoviesViewHolder>(MovieDiffCallback()) 
         if (position >= currentList.size - 10) {
             onReachEndScrollListener?.loadMoreItems()
         }
+
         holder.ivPoster.setOnClickListener {
-            onShopItemClickListener?.invoke(movie)
+            onMovieClickListener?.invoke(movie)
 
         }
     }

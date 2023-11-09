@@ -1,9 +1,32 @@
-<androidx.fragment.app.FragmentContainerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/shop_item_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Activitys.MainActivity"
-    tools:layout="@layout/fragment_movie_list"
-    />
+    android:orientation="vertical">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentMovieList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:context=".UI.Activitys.MainActivity"
+        tools:layout="@layout/fragment_movie_list" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentMovieDescr"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="visible"
+            tools:context=".UI.Activitys.MainActivity"
+            tools:layout="@layout/fragment_movie_descrip" />
+
+    </LinearLayout>
+
+</LinearLayout>
