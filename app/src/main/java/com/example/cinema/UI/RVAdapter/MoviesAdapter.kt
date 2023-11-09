@@ -11,6 +11,7 @@ import com.example.cinema.data.NetworkEntitys.Movie
 class MoviesAdapter : ListAdapter<Movie, MoviesViewHolder>(MovieDiffCallback()) {
 
     var onReachEndScrollListener: OnReachEndScrollListener? = null
+    var onShopItemClickListener: ((Movie) -> Unit)? = null
     var i = 0
 
 
@@ -36,11 +37,15 @@ class MoviesAdapter : ListAdapter<Movie, MoviesViewHolder>(MovieDiffCallback()) 
         }
 
         Glide.with(holder.itemView).load(movie.poster?.url).into(holder.ivPoster)
-        val formatedRating = "%.1f".format(movie.rating?.kp)
-        holder.tvRating.text = formatedRating
+        val formattedRating = "%.1f".format(movie.rating?.kp)
+        holder.tvRating.text = formattedRating
         holder.tvRating.setBackgroundResource(backgroundID)
         if (position >= currentList.size - 10) {
             onReachEndScrollListener?.loadMoreItems()
+        }
+        holder.ivPoster.setOnClickListener {
+            onShopItemClickListener?.invoke(movie)
+
         }
     }
 
