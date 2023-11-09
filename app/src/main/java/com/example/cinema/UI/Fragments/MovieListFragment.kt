@@ -4,8 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cinema.R
+import com.example.cinema.UI.Model.MainViewModel
+import com.example.cinema.UI.RVAdapter.MoviesAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,18 +28,22 @@ class MovieListFragment : Fragment() {
     private var movieDescription: String? = null
     private var movieYear: String? = null
     private var moviePoster: String? = null
+    private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var rvMovieItem: RecyclerView
+    private lateinit var viewModel: MainViewModel
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        parseParams()
+        /*parseParams()*/
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
 
@@ -46,34 +56,64 @@ class MovieListFragment : Fragment() {
         private const val MOVIE_YEAR = "MOVIE_YEAR"
         private const val MOVIE_POSTER = "MOVIE_POSTER"
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MovieList.
-         */
-        // TODO: Rename and change types and number of parameters
+
         /*@JvmStatic*/
         fun newInstance(
-            movieName: String,
+            /*movieName: String,
             movieDescription: String,
             movieYear: String,
-            moviePoster: String
+            moviePoster: String*/
         ): MovieListFragment {
             return MovieListFragment().apply {
                 arguments = Bundle().apply {
-                    putString(MOVIE_DESCRIPTION, movieDescription)
+                   /* putString(MOVIE_DESCRIPTION, movieDescription)
                     putString(MOVIE_POSTER, moviePoster)
                     putString(MOVIE_NAME, movieName)
-                    putString(MOVIE_YEAR, movieYear)
+                    putString(MOVIE_YEAR, movieYear)*/
                 }
             }
         }
     }
 
-    private fun parseParams() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews(view)
+
+
+        viewModel.movies.observe(viewLifecycleOwner) {
+            moviesAdapter.submitList(it)
+
+        }
+        viewModel.isLoading.observe(viewLifecycleOwner){
+            if(it){
+                progressBar.visibility=ProgressBar.VISIBLE
+
+            }else{
+
+                progressBar.visibility= ProgressBar.INVISIBLE
+
+            }
+        }
+        if (savedInstanceState == null) {
+            viewModel.loadMovies()
+        }
+
+        moviesAdapter.onReachEndScrollListener = object : MoviesAdapter.OnReachEndScrollListener {
+            override fun loadMoreItems() {
+                viewModel.loadMovies()
+            }
+        }
+    }
+    private fun initViews(view: View) {
+        progressBar=view.findViewById(R.id.progressBarLoading)
+        rvMovieItem = view.findViewById(R.id.recycleViewMovieItem)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        moviesAdapter = MoviesAdapter()
+        rvMovieItem.adapter = moviesAdapter
+        rvMovieItem.layoutManager = GridLayoutManager(activity, 2)
+    }
+
+    /*private fun parseParams() {
         val args = requireArguments()
         if (!args.containsKey(MOVIE_DESCRIPTION) && !args.containsKey(MOVIE_NAME) && !args.containsKey(
                 MOVIE_YEAR
@@ -81,5 +121,5 @@ class MovieListFragment : Fragment() {
         ) {
             throw RuntimeException("Missing required params")
         }
-    }
+    }*/
 }

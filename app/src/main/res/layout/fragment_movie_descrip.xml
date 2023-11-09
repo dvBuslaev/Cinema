@@ -1,49 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/imageViewPoster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            tools:src="@tools:sample/avatars"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars">
 
         </ImageView>
+
         <TextView
             android:id="@+id/textViewMovieName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imageViewPoster"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="9dp"
             android:padding="6dp"
             android:textSize="16sp"
             android:textStyle="bold"
-            tools:text="Movie Name"
-            >
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewPoster"
+            tools:text="Movie Name">
 
         </TextView>
+
         <TextView
             android:id="@+id/textViewYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="9dp"
+            android:padding="6dp"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@id/textViewMovieName"
             app:layout_constraintTop_toBottomOf="@id/imageViewPoster"
+            tools:text="2017">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/textVIewMovieDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="9dp"
             android:padding="6dp"
             android:textSize="16sp"
-            android:textStyle="italic"
-            android:textColor="@color/grey"
-            tools:text="2017">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewMovieName"
+            tools:text="Description">
 
         </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
