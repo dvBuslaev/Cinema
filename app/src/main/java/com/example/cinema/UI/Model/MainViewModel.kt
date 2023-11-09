@@ -37,9 +37,10 @@ class MainViewModel : ViewModel() {
             .doAfterTerminate {
                 _isLoading.postValue(false)
             }
-            .subscribe({
+            .subscribe({ it ->
                 _movies.value?.let { loadedMovies ->
-                    loadedMovies.addAll(it.movies)
+                    val newMovies = it.movies.filterNot { loadedMovies.contains(it) }
+                    loadedMovies.addAll(newMovies)
                     _movies.postValue(loadedMovies)
                 } ?: _movies.postValue(it.movies.toMutableList())
 

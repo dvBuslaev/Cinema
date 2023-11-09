@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface ApiService {
    /* &notNullFields=poster.url*/
 
-    @GET("movie?token=8E4WPC4-GVZMCDN-P7C6ZSA-YACNXC1&&limit=5&type=cartoon&year=2020-2023&rating.kp=8.3-10")
+    @GET("movie?token=8E4WPC4-GVZMCDN-P7C6ZSA-YACNXC1&&limit=5&type=movie&year=2020-2023&rating.kp=8.3-10")
     fun getMovieList(@Query("page") page: Int): Single<MovieResponse>
 
 

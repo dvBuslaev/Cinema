@@ -1,4 +1,4 @@
-package com.example.cinema.UI
+package com.example.cinema.UI.Activitys
 
 import android.os.Bundle
 import android.widget.ProgressBar
