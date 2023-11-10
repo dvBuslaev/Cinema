@@ -1,6 +1,7 @@
 package com.example.cinema.data.NetworkEntitys
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class Ratingg (
@@ -9,4 +10,4 @@ data class Ratingg (
     @SerializedName("imdb"               ) var imdb               : Double? = null,
 
 
-)
+): Serializable

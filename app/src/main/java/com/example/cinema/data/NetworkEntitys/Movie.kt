@@ -1,6 +1,7 @@
 package com.example.cinema.data.NetworkEntitys
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Movie (
 
@@ -26,4 +27,4 @@ data class Movie (
 
     @SerializedName("releaseYears"     ) var releaseYears     : ArrayList<String>    = arrayListOf()
 
-)
+):Serializable

@@ -1,6 +1,7 @@
 package com.example.cinema.data.NetworkEntitys
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Names (
 
@@ -8,4 +9,4 @@ data class Names (
     @SerializedName("language" ) var language : String? = null,
     @SerializedName("type"     ) var type     : String? = null
 
-)
+): Serializable

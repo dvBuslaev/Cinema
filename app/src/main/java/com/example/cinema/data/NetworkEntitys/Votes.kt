@@ -1,6 +1,7 @@
 package com.example.cinema.data.NetworkEntitys
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Votes (
 
@@ -10,4 +11,4 @@ data class Votes (
     @SerializedName("russianFilmCritics" ) var russianFilmCritics : Int? = null,
     @SerializedName("await"              ) var await              : Int? = null
 
-)
+): Serializable

@@ -1,32 +1,26 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentMovieList"
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:visibility="visible"
         tools:context=".UI.Activitys.MainActivity"
         tools:layout="@layout/fragment_movie_list" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
 
-        <androidx.fragment.app.FragmentContainerView
+       <!-- <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentMovieDescr"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:visibility="visible"
+            android:visibility="gone"
             tools:context=".UI.Activitys.MainActivity"
             tools:layout="@layout/fragment_movie_descrip" />
+-->
 
-    </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.cinema.data.NetworkEntitys
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MovieResponse(
 
@@ -10,4 +11,4 @@ data class MovieResponse(
     @SerializedName("page") var page: Int? = null,
     @SerializedName("pages") var pages: Int? = null
 
-)
+): Serializable
