@@ -1,5 +1,6 @@
 package com.example.cinema.UI.Fragments
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.cinema.R
 import com.example.cinema.UI.Model.MainViewModel
+import com.example.cinema.data.NetworkEntitys.Movie
+import com.example.cinema.data.NetworkEntitys.Poster
+import java.io.Serializable
 
 
 class MovieDescripFragment : Fragment() {
@@ -39,58 +43,54 @@ class MovieDescripFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("MovieDescripFragment","I WAS CREATED")
-        val args = requireArguments()
+
         initViews(view)
-        setViews(args)
-        Glide.with(ivPoster.context).load(args.getString(MOVIE_POSTER)).into(ivPoster)
+        setViews()
+        val poster=requireArguments().getParcelable<Movie>(MOVIE)?.poster.toString()
+
+
 
     }
 
     companion object {
-        private const val SCREEN_MODE = "extra_mode"
-        private const val MOVIE_ID = "MOVIE_ID"
-        private const val MOVIE_DESCRIPTION = "MOVIE_DESCRIPTION"
-        private const val MOVIE_NAME = "MOVIE_NAME"
-        private const val MODE_UNKNOWN = ""
-        private const val MOVIE_YEAR = "MOVIE_YEAR"
-        private const val MOVIE_POSTER = "MOVIE_POSTER"
+        private const val MOVIE = "movie"
+
 
 
         /*@JvmStatic*/
         fun newInstance(
-            movieName: String,
-            movieDescription: String,
-            movieYear: String,
-            moviePoster: String
+            movie:Movie,
+
         ): MovieDescripFragment {
             return MovieDescripFragment().apply {
                 arguments = Bundle().apply {
-                    putString(MOVIE_DESCRIPTION, movieDescription)
-                    putString(MOVIE_POSTER, moviePoster)
-                    putString(MOVIE_NAME, movieName)
-                    putString(MOVIE_YEAR, movieYear)
+                   putParcelable(MOVIE,movie)
                 }
             }
         }
     }
 
-    private fun parseParams() {
-        val args = requireArguments()
-        if (!args.containsKey(MOVIE_DESCRIPTION) && !args.containsKey(MOVIE_NAME) && !args.containsKey(
-                MOVIE_YEAR
-            ) && !args.containsKey(MOVIE_POSTER)
-        ) {
-            throw RuntimeException("Missing required params")
+
+
+    private fun setViews() {
+        arguments?.let {
+            val movie:Movie? = it.getParcelable(MOVIE)
+            val poster=movie?.poster?.url
+            tvName.text=movie?.name
+            tvDescription.text=movie?.description
+            Glide.with(this).load(poster).into(ivPoster);
+            Log.d("setViews","${movie?.poster}")
         }
 
 
     }
+    private fun parseParams() {
 
-    private fun setViews(args: Bundle?) {
+        if (!requireArguments().containsKey(MOVIE) ) {
+            throw RuntimeException("Missing required params")
+        }
 
-        tvYear.text = args?.getString(MOVIE_YEAR).toString()
-        tvDescription.text = args?.getString(MOVIE_DESCRIPTION).toString()
-        tvName.text = args?.getString(MOVIE_NAME).toString()
+
     }
 
     private fun initViews(view: View) {

@@ -22,22 +22,23 @@ class MainActivity : AppCompatActivity(),MovieListFragment.OnMovieFragmentIntera
 
     }
 
-    override fun onMovieClick() {
-        Log.d("onMovieClick","clicked")
+    override fun onMovieClick(movie: Movie) {
+        Log.d("onMovieClick", movie.poster.toString())
 
-    launchFragment2(MovieDescripFragment.newInstance("movie name","once apon the time","2007","https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/4fe19ade-348a-404f-b35f-32616017ce91/x1000"))
+    launchFragment2(MovieDescripFragment.newInstance(movie))
+
     }
 
 
     private fun launchFragment(fragment: Fragment) {
-        supportFragmentManager.popBackStack()
+        //supportFragmentManager.popBackStack()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
     }
     private fun launchFragment2(fragment: Fragment) {
-        supportFragmentManager.popBackStack()
+       // supportFragmentManager.popBackStack()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)

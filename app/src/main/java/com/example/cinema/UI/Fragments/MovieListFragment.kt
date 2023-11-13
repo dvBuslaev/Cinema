@@ -96,7 +96,7 @@ class MovieListFragment : Fragment() {
             }
         }
         moviesAdapter.onMovieClickListener={
-            onMovieFragmentInteractionListener.onMovieClick()
+            onMovieFragmentInteractionListener.onMovieClick(it)
             Log.d("onMovieFragmentInteractionListener","clicked on ${it.name}")
     }
 
@@ -113,7 +113,7 @@ class MovieListFragment : Fragment() {
     }
 
     interface OnMovieFragmentInteractionListener {
-        fun onMovieClick()
+        fun onMovieClick(movie: Movie)
     }
 
 

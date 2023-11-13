@@ -1,5 +1,6 @@
 package com.example.cinema.data.NetworkEntitys
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -9,4 +10,4 @@ data class Names (
     @SerializedName("language" ) var language : String? = null,
     @SerializedName("type"     ) var type     : String? = null
 
-): Serializable
+)
