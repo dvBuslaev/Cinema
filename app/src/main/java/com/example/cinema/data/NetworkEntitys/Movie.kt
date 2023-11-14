@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 /*@SerializedName("names"            ) var names            : ArrayList<Names>     = arrayListOf(),
 
-@SerializedName("votes"            ) var votes            : Votes?               = Votes(),
+
 
 
 @SerializedName("genres"           ) var genres           : ArrayList<Genres>    = arrayListOf(),
@@ -21,6 +21,7 @@ data class Movie(
     @SerializedName("year") var year: Int? = null,
     @SerializedName("poster") var poster: Poster? = Poster(),
     @SerializedName("rating") var rating: Ratingg? = Ratingg(),
+    @SerializedName("votes"            ) var votes            : Votes?               = Votes(),
     @SerializedName("description") var description: String? = null,
     @SerializedName("shortDescription") var shortDescription: String? = null,
     @SerializedName("releaseYears") var releaseYears: ArrayList<String> = arrayListOf()
@@ -35,6 +36,7 @@ data class Movie(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Poster::class.java.classLoader) as Poster?,
         parcel.readValue(Ratingg::class.java.classLoader) as Ratingg?,
+        parcel.readValue(Ratingg::class.java.classLoader) as Votes?,
         parcel.readString(),
         parcel.readString(),
         parcel.createStringArrayList() ?: arrayListOf()
@@ -49,6 +51,7 @@ data class Movie(
         parcel.writeValue(year)
         parcel.writeValue(poster)
         parcel.writeValue(rating)
+        parcel.writeValue(votes)
         parcel.writeString(description)
         parcel.writeString(shortDescription)
         parcel.writeStringList(releaseYears)
