@@ -1,6 +1,7 @@
 package com.example.cinema.UI.Model
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,12 +19,13 @@ class MovieDescrViewModel:ViewModel() {
     private val _trailers = MutableLiveData<MutableList<Trailers>>()
     private val compositeDisposable = CompositeDisposable()
     fun loadTrailer(movieID: String) {
+        Log.d("MovieDescrViewModel","started")
         val disposable = ApiFactory.apiService.getMovieTrailer(movieID).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             /*.map {  }*/
             .subscribe({
                        _trailers.postValue(it.videos?.trailers?.toMutableList())
-
+                        Log.d("MovieDescrViewModel","${it.videos?.trailers}")
             }, { e ->
                 e.printStackTrace()
             })

@@ -14,7 +14,7 @@ interface ApiService {
     fun getMovieList(@Query("page") page: Int): Single<MovieResponse>
 
     @GET("movie/{idFilms}?token=YG6VWAJ-M18M254-P5KF2A4-5VQGA9N")
-    fun getMovieTrailer(@Query("idFilms") idFilm : String): Single<TrailerResponse>
+    fun getMovieTrailer(@Path("idFilms") idFilm : String): Single<TrailerResponse>
 
 
 }
