@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageViewPoster"
+            android:id="@+id/imageViewPosterMovie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -31,8 +31,8 @@
             android:background="@drawable/rating_green"
             android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/imageViewPoster"
-            app:layout_constraintTop_toTopOf="@id/imageViewPoster"
+            app:layout_constraintEnd_toEndOf="@id/imageViewPosterMovie"
+            app:layout_constraintTop_toTopOf="@id/imageViewPosterMovie"
 
             tools:text="8.9">
 

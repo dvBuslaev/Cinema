@@ -1,78 +1,111 @@
 package com.example.cinema.UI.Fragments
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.cinema.R
+import com.example.cinema.UI.Model.MainViewModel
+import com.example.cinema.UI.Model.MovieDescrViewModel
+import com.example.cinema.data.NetworkEntitys.Movie
+import com.example.cinema.data.NetworkEntitys.Poster
+import java.io.Serializable
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MovieDescripFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MovieDescripFragment : Fragment() {
+    private lateinit var ivPoster: ImageView
+    private lateinit var tvYear: TextView
+    private lateinit var viewModel: MovieDescrViewModel
+    private lateinit var tvDescription: TextView
+    private lateinit var tvName: TextView
 
-    private var movieName: String? = null
-    private var movieDescription: String? = null
-    private var movieYear: String? = null
-    private var moviePoster: String? = null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         parseParams()
+
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+               return inflater.inflate(R.layout.fragment_movie_descrip, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        initViews(view)
+        setViews()
+
+
+
+
+
     }
 
     companion object {
-        private const val SCREEN_MODE = "extra_mode"
-        private const val MOVIE_ID = "MOVIE_ID"
-        private const val MOVIE_DESCRIPTION = "MOVIE_DESCRIPTION"
-        private const val MOVIE_NAME = "MOVIE_NAME"
-        private const val MODE_UNKNOWN = ""
-        private const val MOVIE_YEAR = "MOVIE_YEAR"
-        private const val MOVIE_POSTER = "MOVIE_POSTER"
+        private const val MOVIE = "movie"
+
 
 
         /*@JvmStatic*/
         fun newInstance(
-            movieName: String,
-            movieDescription: String,
-            movieYear: String,
-            moviePoster: String
-        ): MovieListFragment {
-            return MovieListFragment().apply {
+            movie:Movie,
+
+        ): MovieDescripFragment {
+            return MovieDescripFragment().apply {
                 arguments = Bundle().apply {
-                    putString(MOVIE_DESCRIPTION, movieDescription)
-                    putString(MOVIE_POSTER, moviePoster)
-                    putString(MOVIE_NAME, movieName)
-                    putString(MOVIE_YEAR, movieYear)
+                   putParcelable(MOVIE,movie)
                 }
             }
         }
     }
 
+
+
+    private fun setViews() {
+        arguments?.let {
+            val movie:Movie? = it.getParcelable(MOVIE)
+            val poster=movie?.poster?.url
+            tvName.text=movie?.name
+            tvDescription.text=movie?.description
+            Glide.with(this).load(poster).into(ivPoster)
+            viewModel.loadTrailer(movie?.id.toString())
+
+        }
+
+
+    }
     private fun parseParams() {
-        val args = requireArguments()
-        if (!args.containsKey(MOVIE_DESCRIPTION) && !args.containsKey(MOVIE_NAME) && !args.containsKey(
-                MOVIE_YEAR
-            ) && !args.containsKey(MOVIE_POSTER)
-        ) {
+
+        if (!requireArguments().containsKey(MOVIE) ) {
             throw RuntimeException("Missing required params")
         }
+
+
+    }
+
+    private fun initViews(view: View) {
+        viewModel = ViewModelProvider(requireActivity())[MovieDescrViewModel::class.java]
+        ivPoster = view.findViewById(R.id.imageViewPosterfragment)
+        tvYear = view.findViewById(R.id.textViewYear)
+        tvDescription = view.findViewById(R.id.textVIewMovieDescription)
+        tvName = view.findViewById(R.id.textViewMovieName)
+
+
     }
 }

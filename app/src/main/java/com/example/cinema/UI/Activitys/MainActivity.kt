@@ -1,25 +1,20 @@
 package com.example.cinema.UI.Activitys
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.widget.ProgressBar
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.cinema.R
+import com.example.cinema.UI.Fragments.MovieDescripFragment
 import com.example.cinema.UI.Fragments.MovieListFragment
 import com.example.cinema.UI.Model.MainViewModel
 import com.example.cinema.UI.RVAdapter.MoviesAdapter
+import com.example.cinema.data.NetworkEntitys.Movie
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),MovieListFragment.OnMovieFragmentInteractionListener {
 
-    private lateinit var moviesAdapter: MoviesAdapter
-    private lateinit var rvMovieItem: RecyclerView
-    private lateinit var viewModel: MainViewModel
-    private lateinit var progressBar:ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,12 +22,25 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onMovieClick(movie: Movie) {
+        Log.d("onMovieClick", movie.poster.toString())
+
+    launchFragment2(MovieDescripFragment.newInstance(movie))
+
+    }
 
 
     private fun launchFragment(fragment: Fragment) {
-        supportFragmentManager.popBackStack()
+        //supportFragmentManager.popBackStack()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.shop_item_container, fragment)
+            .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+    private fun launchFragment2(fragment: Fragment) {
+       // supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
     }

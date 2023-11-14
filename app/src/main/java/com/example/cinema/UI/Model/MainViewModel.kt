@@ -16,28 +16,23 @@ class MainViewModel : ViewModel() {
     private val _movies = MutableLiveData<MutableList<Movie>>()
     val movies: LiveData<MutableList<Movie>>
         get() = _movies
-    private val _isLoading= MutableLiveData(false)
+
+    private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
-        get() =_isLoading
-
-
-
+        get() = _isLoading
 
 
     private val compositeDisposable = CompositeDisposable()
     fun loadMovies() {
-        if(_isLoading.value==true){
+        if (_isLoading.value == true) {
             return
         }
         val disposable = ApiFactory.apiService.getMovieList(pageQuery).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe {
+            .observeOn(AndroidSchedulers.mainThread()).doOnSubscribe {
                 _isLoading.postValue(true)
-            }
-            .doAfterTerminate {
+            }.doAfterTerminate {
                 _isLoading.postValue(false)
-            }
-            .subscribe({ it ->
+            }.subscribe({ it ->
                 _movies.value?.let { loadedMovies ->
                     val newMovies = it.movies.filterNot { loadedMovies.contains(it) }
                     loadedMovies.addAll(newMovies)

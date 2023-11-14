@@ -1,17 +1,24 @@
 package com.example.cinema.UI.Fragments
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinema.R
 import com.example.cinema.UI.Model.MainViewModel
 import com.example.cinema.UI.RVAdapter.MoviesAdapter
+import com.example.cinema.data.NetworkEntitys.Movie
+import com.example.cinema.data.NetworkEntitys.MovieResponse
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,53 +30,38 @@ import com.example.cinema.UI.RVAdapter.MoviesAdapter
  * create an instance of this fragment.
  */
 class MovieListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var movieName: String? = null
-    private var movieDescription: String? = null
-    private var movieYear: String? = null
-    private var moviePoster: String? = null
+
     private lateinit var moviesAdapter: MoviesAdapter
     private lateinit var rvMovieItem: RecyclerView
     private lateinit var viewModel: MainViewModel
     private lateinit var progressBar: ProgressBar
+    private lateinit var onMovieFragmentInteractionListener: OnMovieFragmentInteractionListener
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        /*parseParams()*/
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if (context is OnMovieFragmentInteractionListener) {
+            onMovieFragmentInteractionListener=context
+        }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
 
     companion object {
-        private const val SCREEN_MODE = "extra_mode"
-        private const val MOVIE_ID = "MOVIE_ID"
-        private const val MOVIE_DESCRIPTION = "MOVIE_DESCRIPTION"
-        private const val MOVIE_NAME = "MOVIE_NAME"
-        private const val MODE_UNKNOWN = ""
-        private const val MOVIE_YEAR = "MOVIE_YEAR"
-        private const val MOVIE_POSTER = "MOVIE_POSTER"
 
-
-        /*@JvmStatic*/
         fun newInstance(
-            /*movieName: String,
-            movieDescription: String,
-            movieYear: String,
-            moviePoster: String*/
+        //movieList: MovieResponse
         ): MovieListFragment {
             return MovieListFragment().apply {
                 arguments = Bundle().apply {
-                   /* putString(MOVIE_DESCRIPTION, movieDescription)
-                    putString(MOVIE_POSTER, moviePoster)
-                    putString(MOVIE_NAME, movieName)
-                    putString(MOVIE_YEAR, movieYear)*/
+                    //putSerializable("MOVIE", movieList);
+
                 }
             }
         }
@@ -84,13 +76,13 @@ class MovieListFragment : Fragment() {
             moviesAdapter.submitList(it)
 
         }
-        viewModel.isLoading.observe(viewLifecycleOwner){
-            if(it){
-                progressBar.visibility=ProgressBar.VISIBLE
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                progressBar.visibility = ProgressBar.VISIBLE
 
-            }else{
+            } else {
 
-                progressBar.visibility= ProgressBar.INVISIBLE
+                progressBar.visibility = ProgressBar.INVISIBLE
 
             }
         }
@@ -103,23 +95,26 @@ class MovieListFragment : Fragment() {
                 viewModel.loadMovies()
             }
         }
+        moviesAdapter.onMovieClickListener={
+            onMovieFragmentInteractionListener.onMovieClick(it)
+            Log.d("onMovieFragmentInteractionListener","clicked on ${it.name}")
     }
+
+    }
+
     private fun initViews(view: View) {
-        progressBar=view.findViewById(R.id.progressBarLoading)
+
+        progressBar = view.findViewById(R.id.progressBarLoading)
         rvMovieItem = view.findViewById(R.id.recycleViewMovieItem)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         moviesAdapter = MoviesAdapter()
         rvMovieItem.adapter = moviesAdapter
         rvMovieItem.layoutManager = GridLayoutManager(activity, 2)
     }
 
-    /*private fun parseParams() {
-        val args = requireArguments()
-        if (!args.containsKey(MOVIE_DESCRIPTION) && !args.containsKey(MOVIE_NAME) && !args.containsKey(
-                MOVIE_YEAR
-            ) && !args.containsKey(MOVIE_POSTER)
-        ) {
-            throw RuntimeException("Missing required params")
-        }
-    }*/
+    interface OnMovieFragmentInteractionListener {
+        fun onMovieClick(movie: Movie)
+    }
+
+
 }

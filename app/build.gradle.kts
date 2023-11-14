@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.fragment:fragment:1.6.2")
     //Room
     val room_version = "2.6.0"
         implementation ("androidx.room:room-runtime:$room_version")
