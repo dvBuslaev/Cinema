@@ -3,9 +3,7 @@ package com.example.cinema.UI.RVAdapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.cinema.R
-import com.example.cinema.data.NetworkEntitys.Movie
 import com.example.cinema.data.NetworkEntitys.Trailers
 
 class TrailerAdapter:ListAdapter<Trailers,TrailerViewHolder>(TrailerDiffCallback()) {

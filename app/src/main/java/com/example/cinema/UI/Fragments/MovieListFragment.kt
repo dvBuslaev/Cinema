@@ -1,24 +1,20 @@
 package com.example.cinema.UI.Fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinema.R
 import com.example.cinema.UI.Model.MainViewModel
 import com.example.cinema.UI.RVAdapter.MoviesAdapter
-import com.example.cinema.data.NetworkEntitys.Movie
-import com.example.cinema.data.NetworkEntitys.MovieResponse
+import com.example.cinema.data.NetworkEntitys.Moviee
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,6 +94,7 @@ class MovieListFragment : Fragment() {
         moviesAdapter.onMovieClickListener={
             onMovieFragmentInteractionListener.onMovieClick(it)
             Log.d("onMovieFragmentInteractionListener","clicked on ${it.name}")
+
     }
 
     }
@@ -113,7 +110,7 @@ class MovieListFragment : Fragment() {
     }
 
     interface OnMovieFragmentInteractionListener {
-        fun onMovieClick(movie: Movie)
+        fun onMovieClick(moviee: Moviee)
     }
 
 

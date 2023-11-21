@@ -1,32 +1,43 @@
 package com.example.cinema.UI.Activitys
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.cinema.R
 import com.example.cinema.UI.Fragments.MovieDescripFragment
 import com.example.cinema.UI.Fragments.MovieListFragment
-import com.example.cinema.UI.Model.MainViewModel
-import com.example.cinema.UI.RVAdapter.MoviesAdapter
-import com.example.cinema.data.NetworkEntitys.Movie
+import com.example.cinema.data.NetworkEntitys.Moviee
+import com.example.cinema.data.NetworkEntitys.Trailers
 
-class MainActivity : AppCompatActivity(),MovieListFragment.OnMovieFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), MovieListFragment.OnMovieFragmentInteractionListener,
+    MovieDescripFragment.OnTrailerClickListener {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         launchFragment(MovieListFragment.newInstance())
 
+
     }
 
-    override fun onMovieClick(movie: Movie) {
-        Log.d("onMovieClick", movie.poster.toString())
+    override fun onMovieClick(moviee: Moviee) {
+        launchFragment2(MovieDescripFragment.newInstance(moviee))
 
-    launchFragment2(MovieDescripFragment.newInstance(movie))
+    }
 
+    override fun onTrailerClicked(item: Trailers) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(item.url)
+        startActivity(intent)
+        Log.d("onClicked", "${intent.data}")
+    }
+
+    override fun onStarClicked(moviee: Moviee) {
+        TODO("Not yet implemented")
     }
 
 
@@ -37,11 +48,14 @@ class MainActivity : AppCompatActivity(),MovieListFragment.OnMovieFragmentIntera
             .addToBackStack(null)
             .commit()
     }
+
     private fun launchFragment2(fragment: Fragment) {
-       // supportFragmentManager.popBackStack()
+        // supportFragmentManager.popBackStack()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
     }
+
+
 }

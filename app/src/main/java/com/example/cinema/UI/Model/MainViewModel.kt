@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cinema.data.ApiService.ApiFactory
-import com.example.cinema.data.NetworkEntitys.Movie
+import com.example.cinema.data.NetworkEntitys.Moviee
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -13,8 +13,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class MainViewModel : ViewModel() {
 
     var pageQuery = 1
-    private val _movies = MutableLiveData<MutableList<Movie>>()
-    val movies: LiveData<MutableList<Movie>>
+    private val _movies = MutableLiveData<MutableList<Moviee>>()
+    val movies: LiveData<MutableList<Moviee>>
         get() = _movies
 
     private val _isLoading = MutableLiveData(false)
@@ -34,14 +34,14 @@ class MainViewModel : ViewModel() {
                 _isLoading.postValue(false)
             }.subscribe({ it ->
                 _movies.value?.let { loadedMovies ->
-                    val newMovies = it.movies.filterNot { loadedMovies.contains(it) }
+                    val newMovies = it.moviees.filterNot { loadedMovies.contains(it) }
                     loadedMovies.addAll(newMovies)
                     _movies.postValue(loadedMovies)
-                } ?: _movies.postValue(it.movies.toMutableList())
+                } ?: _movies.postValue(it.moviees.toMutableList())
 
                 Log.d("TAG", "Loaded: $pageQuery")
                 pageQuery++
-                Log.d("MainActivity", "${it.movies}")
+                Log.d("MainActivity", "${it.moviees}")
 
             }, { e ->
                 e.printStackTrace()
@@ -51,8 +51,6 @@ class MainViewModel : ViewModel() {
 
 
     }
-
-
 
 
     override fun onCleared() {

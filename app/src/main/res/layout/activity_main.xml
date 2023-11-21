@@ -13,14 +13,4 @@
         tools:layout="@layout/fragment_movie_list" />
 
 
-       <!-- <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentMovieDescr"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:context=".UI.Activitys.MainActivity"
-            tools:layout="@layout/fragment_movie_descrip" />
--->
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

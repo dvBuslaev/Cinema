@@ -1,15 +1,15 @@
 package com.example.cinema.UI.RVAdapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.cinema.data.NetworkEntitys.Movie
+import com.example.cinema.data.NetworkEntitys.Moviee
 
 class MovieDiffCallback(
-) : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+) : DiffUtil.ItemCallback<Moviee>() {
+    override fun areItemsTheSame(oldItem: Moviee, newItem: Moviee): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+    override fun areContentsTheSame(oldItem: Moviee, newItem: Moviee): Boolean {
         return oldItem == newItem
     }
 
