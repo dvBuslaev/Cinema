@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
     id("kotlin-parcelize")
 }
 
@@ -23,8 +23,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -44,24 +43,24 @@ dependencies {
     implementation("androidx.fragment:fragment:1.6.2")
     //Room
     val room_version = "2.6.0"
-        implementation ("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-rxjava3:$room_version")
-    kapt ("androidx.room:room-compiler:2.6.0")
-
+    kapt("androidx.room:room-compiler:2.6.0")
 
 
     //RxJava
-    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.5")
 
     //Glide
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     //retrofit
-    implementation ("com.google.code.gson:gson:2.8.7")
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+    implementation("com.google.code.gson:gson:2.8.7")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+
 
     //DaggerDI
     /*implementation ("com.google.dagger:dagger:2.28.3")

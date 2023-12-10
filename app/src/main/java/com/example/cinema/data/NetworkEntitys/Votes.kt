@@ -7,7 +7,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Votes (
-
     @SerializedName("kp"                 ) var kinop                 : Int? = null,
     @SerializedName("imdb"               ) var imdbvote               : Int? = null,
     @SerializedName("filmCritics"        ) var filmCritics        : Int? = null,

@@ -15,9 +15,9 @@ import kotlinx.parcelize.Parcelize
 @SerializedName("genres"           ) var genres           : ArrayList<Genres>    = arrayListOf(),
 @SerializedName("countries"        ) var countries        : ArrayList<Countries> = arrayListOf(),
 @SerializedName("externalId"       ) var externalId       : ExternalId?          = ExternalId(),*/
-@Entity(tableName = "favoritMovies")
+@Entity(tableName = "favoriteMovies")
 @Parcelize
-data class Moviee(
+data class Movie(
     @SerializedName("name") var name: String? = null,
 
     @PrimaryKey
@@ -30,7 +30,7 @@ data class Moviee(
     @Embedded
     @SerializedName("poster") var poster: Poster? = Poster(),
     @Embedded
-    @SerializedName("rating") var rating: Ratingg? = Ratingg(),
+    @SerializedName("rating") var rating: Rating? = Rating(),
     @Embedded
     @SerializedName("votes") var votes: Votes? = Votes(),
     @SerializedName("description") var description: String? = null,

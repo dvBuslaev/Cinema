@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.cinema.R
 import com.example.cinema.UI.Fragments.MovieDescripFragment
 import com.example.cinema.UI.Fragments.MovieListFragment
-import com.example.cinema.data.NetworkEntitys.Moviee
+import com.example.cinema.data.NetworkEntitys.Movie
 import com.example.cinema.data.NetworkEntitys.Trailers
 
 class MainActivity : AppCompatActivity(), MovieListFragment.OnMovieFragmentInteractionListener,
@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity(), MovieListFragment.OnMovieFragmentInter
 
     }
 
-    override fun onMovieClick(moviee: Moviee) {
-        launchFragment2(MovieDescripFragment.newInstance(moviee))
+    override fun onMovieClick(movie: Movie) {
+        launchFragment2(MovieDescripFragment.newInstance(movie))
 
     }
 
@@ -36,25 +36,21 @@ class MainActivity : AppCompatActivity(), MovieListFragment.OnMovieFragmentInter
         Log.d("onClicked", "${intent.data}")
     }
 
-    override fun onStarClicked(moviee: Moviee) {
+    override fun onStarClicked(movie: Movie) {
         TODO("Not yet implemented")
     }
 
 
     private fun launchFragment(fragment: Fragment) {
         //supportFragmentManager.popBackStack()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .addToBackStack(null)
-            .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null).commit()
     }
 
     private fun launchFragment2(fragment: Fragment) {
         // supportFragmentManager.popBackStack()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .addToBackStack(null)
-            .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null).commit()
     }
 
 

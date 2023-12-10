@@ -10,49 +10,40 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.cinema.R
 import com.example.cinema.UI.Model.MainViewModel
 import com.example.cinema.UI.RVAdapter.MoviesAdapter
-import com.example.cinema.data.NetworkEntitys.Moviee
+import com.example.cinema.data.NetworkEntitys.Movie
+import com.example.cinema.databinding.FragmentMovieListBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MovieListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MovieListFragment : Fragment() {
 
     private lateinit var moviesAdapter: MoviesAdapter
-    private lateinit var rvMovieItem: RecyclerView
     private lateinit var viewModel: MainViewModel
-    private lateinit var progressBar: ProgressBar
     private lateinit var onMovieFragmentInteractionListener: OnMovieFragmentInteractionListener
+    private var _binding: FragmentMovieListBinding? = null
+    private val binding: FragmentMovieListBinding
+        get() = _binding ?: throw RuntimeException("FragmentWelcomeBinding == null")
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         if (context is OnMovieFragmentInteractionListener) {
-            onMovieFragmentInteractionListener=context
+            onMovieFragmentInteractionListener = context
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+    ): View {
+        _binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     companion object {
 
         fun newInstance(
-        //movieList: MovieResponse
+            //movieList: MovieResponse
         ): MovieListFragment {
             return MovieListFragment().apply {
                 arguments = Bundle().apply {
@@ -65,7 +56,7 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews(view)
+        initViews()
 
 
         viewModel.movies.observe(viewLifecycleOwner) {
@@ -74,11 +65,11 @@ class MovieListFragment : Fragment() {
         }
         viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
-                progressBar.visibility = ProgressBar.VISIBLE
+                binding.progressBarLoading.visibility = ProgressBar.VISIBLE
 
             } else {
 
-                progressBar.visibility = ProgressBar.INVISIBLE
+                binding.progressBarLoading.visibility = ProgressBar.INVISIBLE
 
             }
         }
@@ -91,26 +82,23 @@ class MovieListFragment : Fragment() {
                 viewModel.loadMovies()
             }
         }
-        moviesAdapter.onMovieClickListener={
+        moviesAdapter.onMovieClickListener = {
             onMovieFragmentInteractionListener.onMovieClick(it)
-            Log.d("onMovieFragmentInteractionListener","clicked on ${it.name}")
+            Log.d("onMovieFragmentInteractionListener", "clicked on ${it.name}")
+
+        }
 
     }
 
-    }
-
-    private fun initViews(view: View) {
-
-        progressBar = view.findViewById(R.id.progressBarLoading)
-        rvMovieItem = view.findViewById(R.id.recycleViewMovieItem)
+    private fun initViews() {
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         moviesAdapter = MoviesAdapter()
-        rvMovieItem.adapter = moviesAdapter
-        rvMovieItem.layoutManager = GridLayoutManager(activity, 2)
+        binding.recycleViewMovieItem.adapter = moviesAdapter
+        binding.recycleViewMovieItem.layoutManager = GridLayoutManager(activity, 2)
     }
 
     interface OnMovieFragmentInteractionListener {
-        fun onMovieClick(moviee: Moviee)
+        fun onMovieClick(movie: Movie)
     }
 
 

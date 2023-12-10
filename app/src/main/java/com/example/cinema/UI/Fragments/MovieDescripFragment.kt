@@ -5,35 +5,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.cinema.R
 import com.example.cinema.UI.Model.MovieDescrViewModel
 import com.example.cinema.UI.RVAdapter.TrailerAdapter
-import com.example.cinema.data.NetworkEntitys.Moviee
+import com.example.cinema.data.NetworkEntitys.Movie
 import com.example.cinema.data.NetworkEntitys.Trailers
+import com.example.cinema.databinding.FragmentMovieDescripBinding
 
 
 class MovieDescripFragment : Fragment() {
-    private lateinit var ivPoster: ImageView
-    private lateinit var tvYear: TextView
+
     private lateinit var viewModel: MovieDescrViewModel
-    private lateinit var tvDescription: TextView
-    private lateinit var tvName: TextView
-    private lateinit var ivStar: ImageView
+
+
     private lateinit var rvTrailers: RecyclerView
     private lateinit var trailerAdapter: TrailerAdapter
     private lateinit var onTrailerClickListener: OnTrailerClickListener
+    private var _binding: FragmentMovieDescripBinding? = null
+    private val binding: FragmentMovieDescripBinding
+        get() = _binding ?: throw RuntimeException("FragmentWelcomeBinding == null")
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnTrailerClickListener)
-            onTrailerClickListener = context
+        if (context is OnTrailerClickListener) onTrailerClickListener = context
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,24 +40,25 @@ class MovieDescripFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_movie_descrip, container, false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMovieDescripBinding.inflate(inflater, container, false)
+        return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews(view)
+        initViews()
         setViews()
         viewModel.trailers.observe(viewLifecycleOwner) {
             trailerAdapter.submitList(it)
         }
-        trailerAdapter.ontrailerClickListener = {
+        trailerAdapter.onTrailerClickListener = {
             onTrailerClickListener.onTrailerClicked(it)
 
         }
-        ivStar.setOnClickListener {
+        binding.imageViewStar.setOnClickListener {
 
 
         }
@@ -69,11 +68,11 @@ class MovieDescripFragment : Fragment() {
     companion object {
         private const val MOVIE = "movie"
         fun newInstance(
-            moviee: Moviee,
+            movie: Movie,
         ): MovieDescripFragment {
             return MovieDescripFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(MOVIE, moviee)
+                    putParcelable(MOVIE, movie)
                 }
             }
         }
@@ -81,12 +80,12 @@ class MovieDescripFragment : Fragment() {
 
     private fun setViews() {
         arguments?.let {
-            val moviee: Moviee? = it.getParcelable(MOVIE)
-            val poster = moviee?.poster?.url
-            tvName.text = moviee?.name
-            tvDescription.text = moviee?.description
-            Glide.with(this).load(poster).into(ivPoster)
-            viewModel.loadTrailer(moviee?.id.toString())
+            val movie: Movie? = it.getParcelable(MOVIE)
+            val poster = movie?.poster?.url
+            binding.textViewMovieName.text = movie?.name
+            binding.textVIewMovieDescription.text = movie?.description
+            Glide.with(this).load(poster).into(binding.imageViewPosterfragment)
+            viewModel.loadTrailer(movie?.id.toString())
 
 
         }
@@ -98,14 +97,8 @@ class MovieDescripFragment : Fragment() {
         }
     }
 
-    private fun initViews(view: View) {
+    private fun initViews() {
         viewModel = ViewModelProvider(requireActivity())[MovieDescrViewModel::class.java]
-        ivPoster = view.findViewById(R.id.imageViewPosterfragment)
-        tvYear = view.findViewById(R.id.textViewYear)
-        tvDescription = view.findViewById(R.id.textVIewMovieDescription)
-        tvName = view.findViewById(R.id.textViewMovieName)
-        rvTrailers = view.findViewById(R.id.recyclerViewTrailers)
-        ivStar = view.findViewById(R.id.imageViewStar)
         trailerAdapter = TrailerAdapter()
         rvTrailers.adapter = trailerAdapter
 
@@ -114,7 +107,7 @@ class MovieDescripFragment : Fragment() {
 
     interface OnTrailerClickListener {
         fun onTrailerClicked(item: Trailers)
-        fun onStarClicked(moviee: Moviee)
+        fun onStarClicked(movie: Movie)
 
     }
 }

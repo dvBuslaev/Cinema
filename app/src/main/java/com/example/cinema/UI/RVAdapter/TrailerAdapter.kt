@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.cinema.R
 import com.example.cinema.data.NetworkEntitys.Trailers
 
-class TrailerAdapter:ListAdapter<Trailers,TrailerViewHolder>(TrailerDiffCallback()) {
+class TrailerAdapter : ListAdapter<Trailers, TrailerViewHolder>(TrailerDiffCallback()) {
 
-    var ontrailerClickListener: ((Trailers) -> Unit)? = null
+    var onTrailerClickListener: ((Trailers) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrailerViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -18,19 +18,14 @@ class TrailerAdapter:ListAdapter<Trailers,TrailerViewHolder>(TrailerDiffCallback
     }
 
     override fun onBindViewHolder(holder: TrailerViewHolder, position: Int) {
-        val trailer=getItem(position)
-        holder.trailerName.text=trailer.name.toString()
+        val trailer = getItem(position)
+        holder.trailerName.text = trailer.name.toString()
         holder.itemView.setOnClickListener {
-            ontrailerClickListener?.invoke(trailer)
+            onTrailerClickListener?.invoke(trailer)
         }
     }
-
-
-
-
-
-    interface OnTrailerClickListener{
-           fun onClick()
+    interface OnTrailerClickListener {
+        fun onClick()
     }
 
-    }
+}

@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.example.cinema.R
-import com.example.cinema.data.NetworkEntitys.Moviee
+import com.example.cinema.data.NetworkEntitys.Movie
 
-class MoviesAdapter : ListAdapter<Moviee, MoviesViewHolder>(MovieDiffCallback()) {
+class MoviesAdapter : ListAdapter<Movie, MoviesViewHolder>(MovieDiffCallback()) {
 
     var onReachEndScrollListener: OnReachEndScrollListener? = null
-    var onMovieClickListener: ((Moviee) -> Unit)? = null
+    var onMovieClickListener: ((Movie) -> Unit)? = null
 
     var i = 0
 
