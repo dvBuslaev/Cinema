@@ -12,10 +12,10 @@ import io.reactivex.rxjava3.core.Completable
 
 interface MovieDAO {
 
-    @Query("SELECT * FROM favoritMovies")
+    @Query("SELECT * FROM favoriteMovies")
     fun getAllFavMovies(): LiveData<List<Movie>>
 
-    @Query("SELECT * FROM favoritMovies WHERE id=:movieID")
+    @Query("SELECT * FROM favoriteMovies WHERE id=:movieID")
     fun getFavMovie(movieID: Int): LiveData<Movie>
 
     /*@Query("SELECT * FROM favoritMovies WHERE id =:movieID ")
