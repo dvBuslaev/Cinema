@@ -1,4 +1,4 @@
-package com.example.cinema.UI.Fragments
+package com.example.cinema.presentation.Fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.cinema.UI.Model.MovieDescrViewModel
-import com.example.cinema.UI.RVAdapter.TrailerAdapter
+import com.example.cinema.presentation.Model.MovieDescrViewModel
+import com.example.cinema.presentation.RVAdapter.TrailerAdapter
 import com.example.cinema.data.NetworkEntitys.Movie
 import com.example.cinema.data.NetworkEntitys.Trailers
 import com.example.cinema.databinding.FragmentMovieDescripBinding

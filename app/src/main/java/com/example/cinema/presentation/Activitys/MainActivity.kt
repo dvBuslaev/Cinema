@@ -1,4 +1,4 @@
-package com.example.cinema.UI.Activitys
+package com.example.cinema.presentation.Activitys
 
 import android.content.Intent
 import android.net.Uri
@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.cinema.R
-import com.example.cinema.UI.Fragments.MovieDescripFragment
-import com.example.cinema.UI.Fragments.MovieListFragment
+import com.example.cinema.presentation.Fragments.MovieDescripFragment
+import com.example.cinema.presentation.Fragments.MovieListFragment
 import com.example.cinema.data.NetworkEntitys.Movie
 import com.example.cinema.data.NetworkEntitys.Trailers
 

@@ -2,6 +2,7 @@ package com.example.cinema.data.ApiService
 
 import com.example.cinema.data.NetworkEntitys.MovieResponse
 import com.example.cinema.data.NetworkEntitys.TrailerResponse
+import com.example.cinema.domain.MovieRepository
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

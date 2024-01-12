@@ -1,4 +1,4 @@
-package com.example.cinema.UI.Model
+package com.example.cinema.presentation.Model
 
 import android.util.Log
 import androidx.lifecycle.LiveData

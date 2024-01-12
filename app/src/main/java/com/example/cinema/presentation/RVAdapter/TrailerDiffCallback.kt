@@ -1,4 +1,4 @@
-package com.example.cinema.UI.RVAdapter
+package com.example.cinema.presentation.RVAdapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.cinema.data.NetworkEntitys.Trailers

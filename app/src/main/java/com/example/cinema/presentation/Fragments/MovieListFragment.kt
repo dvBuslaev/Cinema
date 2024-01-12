@@ -1,4 +1,4 @@
-package com.example.cinema.UI.Fragments
+package com.example.cinema.presentation.Fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -10,8 +10,8 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.cinema.UI.Model.MainViewModel
-import com.example.cinema.UI.RVAdapter.MoviesAdapter
+import com.example.cinema.presentation.Model.MainViewModel
+import com.example.cinema.presentation.RVAdapter.MoviesAdapter
 import com.example.cinema.data.NetworkEntitys.Movie
 import com.example.cinema.databinding.FragmentMovieListBinding
 

@@ -1,4 +1,4 @@
-package com.example.cinema.UI.RVAdapter
+package com.example.cinema.presentation.RVAdapter
 
 import android.util.Log
 import android.view.LayoutInflater

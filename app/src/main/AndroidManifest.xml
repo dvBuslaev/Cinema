@@ -22,7 +22,7 @@
 
         <activity
             android:permission="android.permission.INTERNET"
-            android:name=".UI.Activitys.MainActivity"
+            android:name=".presentation.Activitys.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
